@@ -25,6 +25,8 @@ new_auth_data = """<Directory />
     Order deny,allow
     allow from all
 </Directory>"""
+oldHttpUser = "User _www"
+oldHttpGroup = "Group _www"
 
 php_data = "#LoadModule php5_module libexec/apache2/libphp5.so"
 new_php_data = "LoadModule php5_module libexec/apache2/libphp5.so"
@@ -36,7 +38,7 @@ vhost_file = "/etc/apache2/extra/httpd-vhosts.conf"
 host_file = "/etc/hosts"
 def setup():
     the_whole_file = read_file(apache_config_file)
-    new_file =  the_whole_file.replace(php_data,new_php_data).replace(vhost_data,new_vhost_data).replace(auth_data,new_auth_data)
+    new_file =  the_whole_file.replace(php_data,new_php_data).replace(vhost_data,new_vhost_data).replace(auth_data,new_auth_data).replace(oldHttpGroup,"#"+oldHttpGroup).replace(oldHttpUser,"#"+oldHttpUser)
     write_file(apache_config_file,new_file)
     write_file(vhost_file,"")
 
