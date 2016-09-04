@@ -41,6 +41,7 @@ def setup():
     new_file =  the_whole_file.replace(php_data,new_php_data).replace(vhost_data,new_vhost_data).replace(auth_data,new_auth_data).replace(oldHttpGroup,"#"+oldHttpGroup).replace(oldHttpUser,"#"+oldHttpUser)
     write_file(apache_config_file,new_file)
     write_file(vhost_file,"")
+    os.popen("sudo apachectl start")
 
 def add_vhost(domain,root_path):
     vhost_config_ori = """
@@ -65,6 +66,7 @@ def main():
     choice = raw_input("请问你是选择启用PHP环境还是添加虚拟主机:")
     if choice == "1":
         print "你选择了启用MAC的PHP环境."
+        setup()
     elif choice =="2":
         print "你选择了添加虚拟主机"
         domain = raw_input("请输入要绑定的域名:")
